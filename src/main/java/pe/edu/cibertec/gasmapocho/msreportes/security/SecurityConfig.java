@@ -21,7 +21,9 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/error").permitAll()
+                        // el WSDL y el servicio SOAP no pasan por el filtro de roles; el token (si viene) se reenvia igual a ms-balones
+                        .requestMatchers(req -> req.getRequestURI().equals("/error")
+                                || req.getRequestURI().startsWith("/ws")).permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(new FiltroJwtAuth(jwtService), UsernamePasswordAuthenticationFilter.class);
         return http.build();

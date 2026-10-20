@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Contrato del servicio SOAP de reportes. A partir de este XSD se genera el WSDL (/ws/reportes.wsdl). -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://gasmapocho.cibertec.edu.pe/reportes"
+           targetNamespace="http://gasmapocho.cibertec.edu.pe/reportes"
+           elementFormDefault="qualified">
+
+    <!-- Operacion getStockActual: no recibe parametros -->
+    <xs:element name="getStockActualRequest">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getStockActualResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="item" type="tns:stockItem" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="stockItem">
+        <xs:sequence>
+            <xs:element name="codigo" type="xs:string"/>
+            <xs:element name="nombre" type="xs:string"/>
+            <xs:element name="stock" type="xs:int"/>
+            <xs:element name="stockMinimo" type="xs:int"/>
+            <xs:element name="bajoMinimo" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
